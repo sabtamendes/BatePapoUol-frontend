@@ -1,25 +1,33 @@
-@media (max-width: 600px) {
+@media (max-width: 414px) {
     @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600;700;800;900&family=Oleo+Script+Swash+Caps:wght@400;700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&family=Righteous&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700&display=swap');
 
     * {
         box-sizing: border-box;
     }
+    body{
+        background-color: #E5E5E5E5;
+    }
 
     /*ENTRADA*/
-    section {
-        display: none;
+    .entrada {
+        visibility: hidden;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 30%;
+        flex-direction: column;
+        position: fixed;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        background: #f7f7f7;
     }
 
     .image {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 30%;
-    }
-
-    img {
         width: 130px;
         height: 92px;
+        margin-bottom: 80%;
     }
 
     .input {
@@ -36,11 +44,11 @@
         font-weight: 400;
         font-size: 18px;
         line-height: 25px;
+        color: #AEAEAE;
+
         display: flex;
         align-items: center;
         text-align: center;
-
-        color: #AEAEAE;
     }
 
     .input :first-child {
@@ -49,7 +57,6 @@
         background-color: #FFFFFF;
         border: 1px solid #D7D7D7;
         border-radius: 4px;
-        ;
     }
 
     .input :last-child {
@@ -75,7 +82,12 @@
         background: #FFFFFF;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
         padding: 5%;
-        
+
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -89,5 +101,53 @@
     header ion-icon {
         font-size: 45px;
         height: 45px;
+    }
+
+    /*---------------------------------------------------------------------*/
+
+    /*FOOTER*/
+    footer {
+        position: fixed;
+        z-index: 1;
+        bottom: 0;
+        left: 0;
+    }
+
+    footer input {
+        width: 100%;
+        height: 80px;
+
+        position: fixed;
+        z-index: 1;
+        bottom: 0;
+        left: 0;
+
+        border: none;
+        background: #FFFFFF;
+        box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    footer input::placeholder {
+        width: 145px;
+        height: 30px;
+
+        font-family: 'Roboto' sans-serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+
+        text-align: center;
+        color: #000000;
+    }
+
+    footer ion-icon {
+        font-size: 30px;
+        margin: 5%;
+
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        z-index: 1;
     }
 }
