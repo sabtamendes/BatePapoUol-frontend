@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="./assets/fav-icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/fav.png" type="image/x-icon">
     <title>BATE PAPO UOL</title>
 </head>
 
@@ -18,16 +18,16 @@
     </header>
 
     <section>
-        <div class="entrada">
+        <div class="entrada ocultar">
             <div class="image">
                 <img src="./assets/logo.png" alt="logo chat">
             </div>
 
             <div class="input">
 
-                <input type="text" placeholder="Digite seu nome">
+                <input class="value" type="text" placeholder="Digite seu nome">
                 </br>
-                <input type="button" value="Entrar">
+                <input class="enviar" type="button" value="Entrar" onclick="enviarNome()">
             </div>
         </div>
     </section>
@@ -35,9 +35,9 @@
     <main>
         <nav>
         </nav>
-        <ul>
+        <ul class="mensagens">
             <li class="status">
-                </span><span>(09:21:45)</span> <strong>João</strong> entra na sala...
+                <span>(09:21:45)</span> <strong>João</strong> entra na sala...
             </li>
             <li class="publico">
                 <span>(09:20:21)</span> <strong>João</strong> para <strong>Todos</strong>: Bom dia</div>
