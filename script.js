@@ -1,30 +1,34 @@
 const AXIOS_URL = "https://mock-api.driven.com.br/api/v6/uol/";
 
+let nome;
+function enviarNome() {
+     nome = document.querySelector('.value').value;
 
-// function enviarNome() {
-//     const nome = document.querySelector('.enviar');
+    const promise = axios.post(`${AXIOS_URL}participants`, {
+        name: nome
+    });
 
-//     const promise = axios.post(`${AXIOS_URL}participants`, {
-//         name: nome.value
-//     });
+   
+    promise.then(removerTelaEntrada);
+    // promise.catch(perguntarNomeNovamente);
+}
+enviarNome();
 
-//     value = '';
-//     promise.then(removerTelaEntrada);
-//     promise.catch(perguntarNomeNovamente);
-// }
+function perguntarNomeNovamente(erro) {
+    if (erro.response.status === 400) {
+        alert("Digite outro nome, este já está em uso!");
+    }
+}
 
-// function perguntarNomeNovamente(erro) {
-//     if (erro.response.status === 400) {
-//         alert("Digite outro nome, este já está em uso!");
-//     }
-// }
+function removerTelaEntrada(response) {
+    const removerTela = document.querySelector('.entrada');
+    if (response.status === 200) {
+        removerTela.classList.remove('ocultar')
+    }
+    removerTela.classList.add('ocultar')
+}
 
-// function removerTelaEntrada(response) {
-//     const removerTela = document.querySelector('.entrada');
-//     if (response.data === 200) {
-//         removerTela.classList.add('ocultar')
-//     }
-// }
+/* ----------------------------------------------------------------------------------------------*/
 
 function pegarDados() {
     const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
@@ -49,8 +53,15 @@ function renderizarMensagem(response) {
 
 
         }
+        if (response.data[i].type === 'private_message') {
+            exibirMensagens.innerHTML += `
+            <li class="reservadamente">
+                <span>(${response.data[i].time})</span> <strong>${response.data[i].from}</strong> reservadamente para <strong>${response.data[i].to}</strong>: ${response.data[i].text}
+                quer tc?
+            </li>`
+        }
     }
-    
+
     atualizarMensagens();
 
 }
@@ -61,7 +72,25 @@ function atualizarMensagens() {
 }
 
 
-function recarregarMensagens(){
+function recarregarMensagens() {
     setInterval(pegarDados, 3000);
 }
-recarregarMensagens();
+
+
+
+
+
+function enviarMensagens() {
+   
+    const input = document.querySelector('#input').value;
+
+    const mensagem = {
+        from: nome,
+        to: "Todos",
+        text: input,
+        type: "message" // ou "private_message" para o bônus
+    }
+    const enviar = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagem);
+    enviar.then(renderizarMensagem)
+}
+enviarMensagens();
