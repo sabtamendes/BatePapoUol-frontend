@@ -12,9 +12,53 @@
 </head>
 
 <body>
+    <nav class="navbar hidden" onclick="mostrarNavbar()"></nav>
+    <aside>
+        <div class="menu hidden">
+            <h6>Escolha um contato
+                para enviar mensagem:</h6>
+            <ul class="post">
+                <li>
+                    <span>
+                        <ion-icon class="people" name="people"></ion-icon>Todos
+                    </span>
+                </li>
+
+                <li>
+                    <span>
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                    </span>
+                </li>
+
+                <li>
+                    <span>
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                    </span>
+                </li>
+            </ul>
+
+            <h6>Escolha a visibilidade:</h6>
+            
+            <ul class="postDois">
+                <li>
+                    <span>
+                        <ion-icon name="lock-open"></ion-icon>Público
+                    </span>
+                </li>
+
+                <li>
+                    <span>
+                        <ion-icon name="lock-open"></ion-icon>Reservadamente
+                    </span>
+                </li>
+            </ul>
+            <ion-icon class="checkmark" name="checkmark-sharp"></ion-icon>
+        </div>
+    </aside>
+
     <header>
         <img src="./assets/logo.png" alt="logo chat">
-        <ion-icon name="people"></ion-icon>
+        <ion-icon name="people" onclick="mostrarNavbar()"></ion-icon>
     </header>
 
     <section>
@@ -25,9 +69,9 @@
 
             <div class="input">
 
-                <input class="value" type="text" placeholder="Digite seu nome">
+                <input class="inputValue" type="text" placeholder="Digite seu nome">
                 </br>
-                <input class="enviar" type="button" value="Entrar" onclick="enviarNome()">
+                <input class="enviar" type="button" value="Entrar" onclick="removerTelaEntrada()">
             </div>
         </div>
     </section>
@@ -36,7 +80,7 @@
         <nav>
         </nav>
         <ul class="mensagens">
-            <li class="status">
+            <!-- <li class="status">
                 <span>(09:21:45)</span> <strong>João</strong> entra na sala...
             </li>
             <li class="publico">
@@ -45,7 +89,7 @@
             <li class="reservadamente">
                 <span>(09:20:21)</span> <strong>João</strong> reservadamente para <strong>Maria</strong>: Oi gatinha
                 quer tc?
-            </li>
+            </li> -->
         </ul>
 
     </main>
@@ -53,11 +97,7 @@
     <footer>
         <input id="input" type="text" placeholder="Escreva aqui...">
         <ion-icon onclick="enviarMensagens()" name="paper-plane-outline"></ion-icon>
-
     </footer>
-
-
-
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

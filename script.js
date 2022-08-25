@@ -1,18 +1,30 @@
 const AXIOS_URL = "https://mock-api.driven.com.br/api/v6/uol/";
 
-//  let nome;
-// function enviarNome() {
-//      nome = document.querySelector('.value').value;
+let nome;
+function enviarNome() {
+    nome = document.querySelector('.inputValue').value;
 
-//     const promise = axios.post(`${AXIOS_URL}participants`, {
-//         name: nome
-//     });
+   const promise = axios.post(`https://mock-api.driven.com.br/api/v6/uol/participants`, {
+       name: nome
+   });
 
 
-//     promise.then(removerTelaEntrada);
-//     // promise.catch(perguntarNomeNovamente);
+   promise.then(removerTelaEntrada);
+   promise.catch(perguntarNomeNovamente);
 
-// }
+   
+}
+enviarNome();
+
+function removerTelaEntrada(response) {
+    const removerTela = document.querySelector('.entrada');
+    if (response !== undefined) {
+        removerTela.classList.remove('hidden');
+    }
+    removerTela.classList.add('hidden');
+    
+}
+
 // enviarNome('Sabta');
 // let nome;
 // function enviarNome() {
@@ -36,13 +48,7 @@ const AXIOS_URL = "https://mock-api.driven.com.br/api/v6/uol/";
 //     }
 // }
 
-// function removerTelaEntrada(response) {
-//     const removerTela = document.querySelector('.entrada');
-//     if (response.status === 200) {
-//         removerTela.classList.remove('ocultar')
-//     }
-//     removerTela.classList.add('ocultar')
-// }
+
 
 // /* ----------------------------------------------------------------------------------------------*/
 
@@ -91,7 +97,7 @@ function pegarDados() {
     const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     promise.then(renderizarMensagem);
 }
-pegarDados();
+ pegarDados();
 
 function renderizarMensagem(response) {
     const exibirMensagens = document.querySelector('.mensagens');
@@ -134,24 +140,25 @@ function recarregarMensagens() {
 function informarConexao() {
     const enviarConexao = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', { name: nome });
     enviarConexao.then(renderizarMensagem);
+   
 }
 
-let nome;
-function perguntarNome() {
-    nome = prompt('Qual o seu lindo nome?');
-    const enviarNome = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants',
-        {
-            name: nome
-        });
+// let nome;
+// function perguntarNome() {
+//     nome = prompt('Qual o seu lindo nome?');
+//     const enviarNome = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants',
+//         {
+//             name: nome
+//         });
 
-    enviarNome.then(pegarDados);
-    enviarNome.catch(perguntarNomeNovamente);
-}
-perguntarNome();
+//     enviarNome.then(pegarDados);
+//     enviarNome.catch(perguntarNomeNovamente);
+// }
+// perguntarNome();
 
 function perguntarNomeNovamente(erro) {
     if (erro.response.status === 400) {
-        prompt("Digite outro nome, este já está em uso!");
+        alert("Digite outro nome, este já está em uso!");
     }
 }
 
@@ -172,8 +179,18 @@ function enviarMensagens() {
 }
 enviarMensagens();
 
-function recarregarPagina(erro) {
-    if (erro.response.status === 400) {
+function recarregarPagina() {
+    if(nome === undefined){
         window.location.reload();
     }
+}
+recarregarPagina();
+
+
+function mostrarNavbar(){
+   const nav = document.querySelector('.navbar');
+   const background = document.querySelector(".menu");
+   nav.classList.toggle('hidden');
+   background.classList.toggle('hidden');
+   console.log(nav)
 }
