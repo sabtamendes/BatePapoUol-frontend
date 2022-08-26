@@ -3,27 +3,34 @@ const AXIOS_URL = "https://mock-api.driven.com.br/api/v6/uol/";
 let nome;
 function enviarNome() {
     nome = document.querySelector('.inputValue').value;
-
-   const promise = axios.post(`https://mock-api.driven.com.br/api/v6/uol/participants`, {
-       name: nome
-   });
-
-
-   promise.then(removerTelaEntrada);
-   promise.catch(perguntarNomeNovamente);
-
-   
-}
-enviarNome();
-
-function removerTelaEntrada(response) {
     const removerTela = document.querySelector('.entrada');
-    if (response !== undefined) {
+    if (nome !== undefined) {
         removerTela.classList.remove('hidden');
     }
     removerTela.classList.add('hidden');
-    
+    const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants',
+        {
+            name: nome
+        });
+    promise.then(iniciarChat);
+    promise.catch(perguntarNomeNovamente);
+
 }
+
+function iniciarChat(response) {
+    //     const removerTela = document.querySelector('.entrada');
+    //     if (response !== undefined) {
+    //         removerTela.classList.remove('hidden');
+    //     }
+    //     removerTela.classList.add('hidden');
+    console.log(response)
+    pegarDados();
+}
+
+
+
+
+
 
 // enviarNome('Sabta');
 // let nome;
@@ -83,21 +90,14 @@ function removerTelaEntrada(response) {
 // }
 // enviarMensagens();
 
-// function informarConexao() {
-//     const enviarConexao = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', { name: nome });
-//     enviarConexao.then(recarregarMensagens)
-// }
-
-
-
-
 
 
 function pegarDados() {
     const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     promise.then(renderizarMensagem);
+
 }
- pegarDados();
+
 
 function renderizarMensagem(response) {
     const exibirMensagens = document.querySelector('.mensagens');
@@ -133,17 +133,18 @@ function atualizarMensagens() {
 }
 
 function recarregarMensagens() {
-    setInterval(pegarDados, 3000);
+    //setInterval(pegarDados, 3000);
     setInterval(informarConexao, 5000, nome);
+    setInterval(listarParticipantes, 10000);
 }
+recarregarMensagens();
 
 function informarConexao() {
-    const enviarConexao = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', { name: nome });
-    enviarConexao.then(renderizarMensagem);
-   
+    axios.post('https://mock-api.driven.com.br/api/v6/uol/status', { name: nome });
+
 }
 
-// let nome;
+
 // function perguntarNome() {
 //     nome = prompt('Qual o seu lindo nome?');
 //     const enviarNome = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants',
@@ -157,8 +158,10 @@ function informarConexao() {
 // perguntarNome();
 
 function perguntarNomeNovamente(erro) {
+    const text = document.querySelector('.texto');
     if (erro.response.status === 400) {
-        alert("Digite outro nome, este já está em uso!");
+        text.innerHTML = `<p>Digite um novo usuário, esse já está em uso!</p>`
+        recarregarPagina();
     }
 }
 
@@ -172,25 +175,30 @@ function enviarMensagens() {
             text: mensagem,
             type: "message" // ou "private_message" para o bônus
         });
-    enviarNovaMensagem.then(pegarDados);
-
-
+    enviarNovaMensagem.then(iniciarChat)
     document.querySelector("#input").value = "";
 }
-enviarMensagens();
+
 
 function recarregarPagina() {
-    if(nome === undefined){
-        window.location.reload();
-    }
+    window.location.reload();
 }
-recarregarPagina();
 
 
-function mostrarNavbar(){
-   const nav = document.querySelector('.navbar');
-   const background = document.querySelector(".menu");
-   nav.classList.toggle('hidden');
-   background.classList.toggle('hidden');
-   console.log(nav)
+
+function mostrarNavbar() {
+    const nav = document.querySelector('.navbar');
+    const background = document.querySelector(".menu");
+    nav.classList.toggle('hidden');
+    background.classList.toggle('hidden');
+    console.log(nav)
+}
+
+// function iniciarChat(response){
+//     console.log(response)
+// }
+
+
+function listarParticipantes() {
+    axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
 }
