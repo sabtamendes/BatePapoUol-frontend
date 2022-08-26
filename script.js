@@ -49,11 +49,7 @@ function iniciarChat(response) {
 
 // enviarNome()
 
-// function perguntarNomeNovamente(erro) {
-//     if (erro.response.status === 400) {
-//         alert("Digite outro nome, este já está em uso!");
-//     }
-// }
+
 
 
 
@@ -95,7 +91,7 @@ function iniciarChat(response) {
 function pegarDados() {
     const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     promise.then(renderizarMensagem);
-
+    listarParticipantes();
 }
 
 
@@ -123,6 +119,7 @@ function renderizarMensagem(response) {
                 quer tc?
             </li>`
         }
+
     }
     atualizarMensagens();
 }
@@ -178,7 +175,7 @@ function enviarMensagens() {
             text: mensagem,
             type: "message" // ou "private_message" para o bônus
         });
-    enviarNovaMensagem.then(iniciarChat)
+    enviarNovaMensagem.then(pegarDados)
     document.querySelector("#input").value = "";
 }
 
@@ -194,14 +191,37 @@ function mostrarNavbar() {
     const background = document.querySelector(".menu");
     nav.classList.toggle('hidden');
     background.classList.toggle('hidden');
-    console.log(nav)
 }
 
-// function iniciarChat(response){
-//     console.log(response)
-// }
 
 
 function listarParticipantes() {
-    axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+    const pegarLista = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+    pegarLista.then(renderizarParticipantes)
 }
+
+function renderizarParticipantes(response) {
+    const usuarios = document.querySelector('.post');
+    usuarios.innerHTML = "";
+    for (let i = 0; i < response.data.length; i++) {
+        usuarios.innerHTML += ` <li class="todos">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <span>${response.data[i].name}</span>
+    </li>`
+    }
+}
+
+document.addEventListener("keyup", function (evento) {
+    if (evento.key === "Enter") {
+        enviarMensagens()
+    }
+});
+
+
+function mensagemPrivada(response) {
+    if (response === 'private_message' && response.from === nome && response.to === nome) {
+        return true;
+    }
+    return false;
+}
+mensagemPrivada()

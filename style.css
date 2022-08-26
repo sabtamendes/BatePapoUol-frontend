@@ -11,15 +11,15 @@ body {
 }
 
 /*ENTRADA*/
-.ocultar {
+
+/* .entrada .hidden {
+    visibility:initial;
+} */
+.entrada.hidden {
     visibility: hidden;
 }
 
-/* .entrada .remover {
-        visibility:initial;
-    } */
-
-.entrada.ocultar {
+.entrada {
     width: 100%;
     height: 100%;
     display: flex;
@@ -79,7 +79,6 @@ body {
     font-size: 18px;
     line-height: 25px;
     color: #696969;
-    border: 1px solid #696969;
 }
 
 /*---------------------------------------------------------*/
@@ -87,11 +86,11 @@ body {
 /*HEADER*/
 
 header {
-    width: 100%;
+    width: 414px;
     height: 80px;
     background: #FFFFFF;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
-    padding: 5%;
+    padding: 2%;
 
     position: fixed;
     z-index: 1;
@@ -109,16 +108,66 @@ header img {
 }
 
 header ion-icon {
-    font-size: 45px;
-    height: 45px;
-    cursor: pointer;
+    font-size: 48px;
+    height: 48px;
+
+}
+
+/*---------------------------------------------------------------------*/
+/*NAV*/
+
+.navbar {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgba(139, 138, 138, 0.541);
+    color: #f50404;
+    text-align: center;
+}
+
+.menu {
+    width: 20%;
+    height: 100%;
+    position: fixed;
+    z-index: 3;
+    background-color: white;
+    top: 0;
+    right: 0;
+    font-weight: Bold;
+    font-size: 16px;
+    padding: 15px 8px;
+}
+
+.menu h6 {
+    margin-top: 15%;
+    text-align: center;
+}
+
+.post,
+.todos .postDois {
+    margin: 10% 0;
+}
+
+.navbar.hidden,
+.menu.hidden {
+    display: none;
+}
+
+.checkmark {
+    border: none;
+    font-size: 15px;
+    height: 20px;
+    background-color: none;
 }
 
 /*---------------------------------------------------------------------*/
 /*MAIN*/
 
 main {
-    margin-top: 30%;
+    margin-top: 20%;
     margin-bottom: 25%;
     font-style: normal;
     font-weight: 400;
@@ -203,14 +252,13 @@ footer input::placeholder {
 
 footer ion-icon {
     font-size: 30px;
-    margin: 5%;
+    padding: 1%;
 
     position: fixed;
     bottom: 0;
     right: 0;
     z-index: 1;
 }
-
 
 
 @media (max-width: 414px) {
@@ -324,8 +372,8 @@ footer ion-icon {
     }
 
     header ion-icon {
-        font-size: 45px;
-        height: 45px;
+        font-size: 48px;
+        height: 48px;
 
     }
 
@@ -363,7 +411,7 @@ footer ion-icon {
     }
 
     .post,
-    .postDois {
+    .todos .postDois {
         margin: 10% 0;
     }
 
@@ -396,11 +444,12 @@ footer ion-icon {
     }
 
     ul {
-        width: 100%;
+        width: 414px;
         height: 100%;
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
+        overflow-x: none;
     }
 
     .status {
@@ -421,11 +470,14 @@ footer ion-icon {
     .status,
     .publico,
     .reservadamente {
+        width: 414px;
         height: auto;
         border-radius: 2px;
         padding: 2.8%;
         margin-bottom: 2%;
         font-family: 'Roboto', sans-serif;
+        word-break: break-word !important;
+
     }
 
 
@@ -439,7 +491,7 @@ footer ion-icon {
     }
 
     footer input {
-        width: 100%;
+        width: 414px;
         height: 80px;
 
         position: fixed;
@@ -471,8 +523,9 @@ footer ion-icon {
         padding: 1%;
 
         position: fixed;
+        top: 92.8%;
         bottom: 0;
-        right: 0;
+        left: 83%;
         z-index: 1;
     }
 
