@@ -140,7 +140,10 @@ function recarregarMensagens() {
 recarregarMensagens();
 
 function informarConexao() {
-    axios.post('https://mock-api.driven.com.br/api/v6/uol/status', { name: nome });
+    if (nome !== undefined) {
+        axios.post('https://mock-api.driven.com.br/api/v6/uol/status', { name: nome });
+    }
+
 
 }
 
