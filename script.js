@@ -92,7 +92,7 @@ function perguntarNomeNovamente(erro) {
     if (erro.response.status === 400) {
         text.innerHTML = `<p>Digite um novo usuário, esse já está em uso!</p>`
     }
-   recarregarPagina();
+    recarregarPagina();
 }
 
 function enviarMensagens() {
@@ -129,9 +129,9 @@ function renderizarParticipantes(response) {
     const usuarios = document.querySelector('.post');
     usuarios.innerHTML = "";
     for (let i = 0; i < response.data.length; i++) {
-        usuarios.innerHTML += ` <li class="todos">
-        <ion-icon name="person-circle-outline"></ion-icon>
-        <span>${response.data[i].name}</span>
+        usuarios.innerHTML += ` <li>
+       <span> <ion-icon name="person-circle-outline"></ion-icon> 
+        ${response.data[i].name}</span>
     </li>`
 
     }
@@ -147,7 +147,20 @@ document.addEventListener("keyup", function (evento) {
 function mensagemPrivada(response) {
     if (response.data.type === 'private_message' && response.data.from === nome && response.data.to === nome) {
         return true;
-        
+
     }
     return false;
+}
+
+function check() {
+    const selecionar = document.querySelector('.postDois  .checkmark');
+
+    if (selecionar !== null) {
+        selecionar.classList.add('ocultar');
+        //selecionar.innerHTML = `<ion-icon name="checkmark-sharp"></ion-icon>`
+    }
+    const tag = document.querySelector('.postDois .checkmark')
+    tag.classList.remove('ocultar');
+
+    // console.log(tag)
 }
