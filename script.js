@@ -63,7 +63,7 @@ function renderizarMensagem(response) {
                 <span>(${response.data[i].time})</span> <strong>${response.data[i].from}</strong> reservadamente para <strong>${response.data[i].to}</strong>: ${response.data[i].text}
             </li>`
         }
-       
+
     }
     atualizarMensagens();
 }
@@ -133,11 +133,13 @@ function selecionarParticipante(destinatarioPrivado, element) {
 function renderizarParticipantes(response) {
     const usuarios = document.querySelector('.contatos');
     usuarios.innerHTML = "";
-
-    usuarios.innerHTML = ` <li class="visibilidade-publico"
-    onclick="selecionarParticipante(this)">
+   
+        usuarios.innerHTML = ` <li class="visibilidade-publico">
     <ion-icon name="people"></ion-icon><span>Todos</span>
+    <ion-icon class="check" name="checkmark-outline">
 </li>`
+    
+
 
     for (let i = 0; i < response.data.length; i++) {
         usuarios.innerHTML += ` <li class="visibilidade-publico" onclick="selecionarParticipante('${response.data[i].name}', this)">
@@ -155,9 +157,7 @@ document.addEventListener("keyup", function (evento) {
 });
 
 function enviarMensagemPrivada() {
-   const modificarTextoInput = document.querySelector('.mensagemPadrao');
     if (destinatario === 'private_mensagem' && tipoMensagem === 'message') {
-       modificarTextoInput.innerHTML += `<span>${destinatario} e ${tipoMensagem}</span>`
         return true;
     }
     return false;
@@ -176,6 +176,8 @@ function enviarMensagens() {
         });
     enviarNovaMensagem.then(pegarDados)
     document.querySelector("#input").value = "";
+    destinatario = "Todos";
+    document.querySelector('.mensagemPadrao').innerHTML = `Enviando para ${destinatario}`
 }
 
 function recarregarPagina() {
