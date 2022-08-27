@@ -100,7 +100,7 @@ function informarConexao() {
 
 function listarParticipantes() {
     const pegarLista = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
-    pegarLista.then(renderizarParticipantes)
+    pegarLista.then(renderizarParticipantes);
 }
 
 
@@ -115,31 +115,27 @@ function escolherVisibilidade(mensagem, elemento) {
     elemento.classList.toggle('ocultar');
 
     tipoMensagem = mensagem;
-    console.log(tipoMensagem)
 }
 
 function selecionarParticipante(destinatarioPrivado, element) {
     const selecionar = document.querySelector('.contatos .check');
     if (selecionar !== null) {
-        selecionar.classList.remove('ocultar')
+        selecionar.classList.remove('ocultar');
     }
     element.classList.toggle('ocultar');
 
     destinatario = destinatarioPrivado;
-    document.querySelector('.mensagemPadrao').innerHTML = `Enviando para ${destinatario}`
-    console.log(destinatario)
+    document.querySelector('.mensagemPadrao').innerHTML = `Enviando para ${destinatario}`;
 }
 
 function renderizarParticipantes(response) {
     const usuarios = document.querySelector('.contatos');
     usuarios.innerHTML = "";
-   
-        usuarios.innerHTML = ` <li class="visibilidade-publico">
+
+    usuarios.innerHTML = ` <li class="visibilidade-publico">
     <ion-icon name="people"></ion-icon><span>Todos</span>
     <ion-icon class="check" name="checkmark-outline">
 </li>`
-    
-
 
     for (let i = 0; i < response.data.length; i++) {
         usuarios.innerHTML += ` <li class="visibilidade-publico" onclick="selecionarParticipante('${response.data[i].name}', this)">
@@ -152,7 +148,7 @@ function renderizarParticipantes(response) {
 
 document.addEventListener("keyup", function (evento) {
     if (evento.key === "Enter") {
-        enviarMensagens()
+        enviarMensagens();
     }
 });
 
@@ -177,7 +173,7 @@ function enviarMensagens() {
     enviarNovaMensagem.then(pegarDados)
     document.querySelector("#input").value = "";
     destinatario = "Todos";
-    document.querySelector('.mensagemPadrao').innerHTML = `Enviando para ${destinatario}`
+    document.querySelector('.mensagemPadrao').innerHTML = `Enviando para ${destinatario}`;
 }
 
 function recarregarPagina() {
