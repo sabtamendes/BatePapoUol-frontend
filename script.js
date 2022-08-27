@@ -32,7 +32,6 @@ function perguntarNomeNovamente(erro) {
         recarregarPagina();
 
     }
-
 }
 
 function pegarDados() {
@@ -58,7 +57,7 @@ function renderizarMensagem(response) {
         </li>`
         }
 
-        if (response.data[i].type === 'private_message') {
+        if (response.data[i].type === 'private_message' && (response.data.to === nome || response.data[i].from === nome)) {
             exibirMensagens.innerHTML += `
             <li class="reservadamente">
                 <span>(${response.data[i].time})</span> <strong>${response.data[i].from}</strong> reservadamente para <strong>${response.data[i].to}</strong>: ${response.data[i].text}
@@ -87,7 +86,6 @@ function informarConexao() {
     }
 }
 
-
 // function perguntarNome() {
 //     nome = prompt('Qual o seu lindo nome?');
 //     const enviarNome = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants',
@@ -99,8 +97,6 @@ function informarConexao() {
 //     enviarNome.catch(perguntarNomeNovamente);
 // }
 // perguntarNome();
-
-
 
 function listarParticipantes() {
     const pegarLista = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
@@ -122,8 +118,6 @@ function escolherVisibilidade(mensagem, elemento) {
     console.log(tipoMensagem)
 }
 
-
-//jogar o nome para o input e (selecionar o nome concluiído)
 function selecionarParticipante(destinatarioPrivado, element) {
     const selecionar = document.querySelector('.contatos .check');
     if (selecionar !== null) {
@@ -132,12 +126,19 @@ function selecionarParticipante(destinatarioPrivado, element) {
     element.classList.toggle('ocultar');
 
     destinatario = destinatarioPrivado;
+    document.querySelector('.mensagemPadrao').innerHTML = `Enviando para ${destinatario}`
     console.log(destinatario)
 }
 
 function renderizarParticipantes(response) {
     const usuarios = document.querySelector('.contatos');
     usuarios.innerHTML = "";
+
+    usuarios.innerHTML = ` <li class="visibilidade-publico"
+    onclick="selecionarParticipante(this)">
+    <ion-icon name="people"></ion-icon><span>Todos</span>
+</li>`
+
     for (let i = 0; i < response.data.length; i++) {
         usuarios.innerHTML += ` <li class="visibilidade-publico" onclick="selecionarParticipante('${response.data[i].name}', this)">
         <ion-icon name="person-circle"></ion-icon><span class="nome">${response.data[i].name}</span><ion-icon class="check" name="checkmark-outline">
@@ -187,33 +188,3 @@ function mostrarNavbar() {
     nav.classList.toggle('hidden');
     background.classList.toggle('hidden');
 }
-
-
-//não está dando certo
-// function mensagemPrivada(response) {
-//     if (response.data.type === 'private_message' && response.data.from === nome && response.data.to === nome) {
-//         return true;
-
-//     }
-//     return false;
-// }
-
-// function moidificarInputMensagem() {
-//     const selecionarContatos = document.querySelector('.contatos li');
-//     const selecionarVisibilidade = document.querySelector('.visibilidades li');
-//     const mensagemPadraoInput = document.querySelector('.mensagemPadrao');
-//     mensagemPadraoInput.innerHTML = ""
-//     if (selecionarContatos !== null && selecionarVisibilidade !== null) {
-//         mensagemPadraoInput.innerHTML += `<span class="mensagemPadrao">Enviando para Todos</span>`
-
-//     }
-//     const selecionado = document.querySelector('.contatos li')
-//     selecionado.innerHTML += `<span>Enviando para ${destinatario}
-//     ${tipoMensagem} $</span>`
-
-// }
-// moidificarInputMensagem()
-
-// let contato;
-// let visibilidade;
-

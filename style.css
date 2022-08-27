@@ -459,13 +459,17 @@ footer ion-icon {
         display: none;
     }
 
-    .checkmark {
+    .ocultar .check {
+        visibility: initial;
+    }
+    
+    .check {
         border: none;
         font-size: 15px;
         height: 20px;
-        background-color: none;
+        color: #28BB25;
+        visibility: hidden;
     }
-
     /*---------------------------------------------------------------------*/
     /*MAIN*/
 
