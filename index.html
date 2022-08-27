@@ -13,37 +13,34 @@
 
 <body>
     <nav class="navbar hidden" onclick="mostrarNavbar()"></nav>
-    <aside>
-        <div class="menu hidden">
-            <h6>Escolha um contato
-                para enviar mensagem:</h6>
-            <ul class="post">
-                <li>
-                    <span>
-                        <ion-icon class="people" name="people"></ion-icon>Todos
-                    </span>
-                </li>
-            </ul>
 
-            <h6>Escolha a visibilidade:</h6>
+    <aside class="menu hidden">
 
-            <ul class="postDois">
-                <li class="selecionado" onclick="check()">
-                    <span >
-                        <ion-icon name="lock-open"></ion-icon>Público
-                        <ion-icon class="checkmark ocultar" name="checkmark-sharp"></ion-icon>
-                    </span>
-                </li>
+        <h3 class="titulo-menu">Escolha um contato para enviar mensagem:</h3>
 
-                <li class="selecionado" onclick="check()">
-                    <span >
-                        <ion-icon name="lock-open"></ion-icon>Reservadamente 
-                        <ion-icon class="checkmark ocultar" name="checkmark-sharp"></ion-icon>
-                    </span>
-                </li>
-            </ul>
-            
-        </div>
+        <ul class="contatos">
+            <li class="todos">
+                <ion-icon name="people"></ion-icon><span>Todos</span>
+                <ion-icon class="check" name="checkmark-outline">
+                </ion-icon>
+            </li>
+        </ul>
+
+        <h3 class="titulo-menu">Escolha a visibilidade:</h3>
+
+        <ul class="visibilidades">
+
+            <li onclick="escolherVisibilidade('message', this)">
+
+                <ion-icon name="lock-open"></ion-icon>Público<ion-icon name="checkmark-outline" class="check">
+                </ion-icon>
+            </li>
+
+            <li onclick="escolherVisibilidade('private_message', this)">
+                <ion-icon name="lock-closed"></ion-icon>Reservadamente<ion-icon name="checkmark-outline" class="check">
+                </ion-icon>
+            </li>
+        </ul>
     </aside>
 
     <header>
@@ -85,6 +82,8 @@
 
     <footer>
         <input id="input" type="text" placeholder="Escreva aqui...">
+        <span class="mensagemPadrao">Enviando para Todos</span>
+        
         <ion-icon onclick="enviarMensagens()" name="paper-plane-outline"></ion-icon>
     </footer>
 

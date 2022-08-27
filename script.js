@@ -1,4 +1,8 @@
 let nome;
+let destinatario = "Todos";
+let tipoMensagem = "message";
+
+
 function enviarNome() {
     nome = document.querySelector('.inputValue').value;
     const removerTela = document.querySelector('.entrada');
@@ -17,8 +21,18 @@ function enviarNome() {
 
 //ARROW FUNCTION - FAZER
 function iniciarChat(response) {
-    console.log(response)
+    response.data
     pegarDados();
+}
+
+function perguntarNomeNovamente(erro) {
+    const text = document.querySelector('.texto');
+    if (erro.response.status === 400) {
+        text.innerHTML += `<div class="texto"><p>Digite um novo usuário, esse já está em uso!</p></div>`
+        recarregarPagina();
+
+    }
+
 }
 
 function pegarDados() {
@@ -40,7 +54,7 @@ function renderizarMensagem(response) {
 
         if (response.data[i].type === 'message') {
             exibirMensagens.innerHTML += ` <li class="publico">
-            <span>(${response.data[i].time})</span> <strong>${response.data[i].from}</strong> <strong>${response.data[i].to}</strong>: ${response.data[i].text} </div>
+            <span>(${response.data[i].time})</span> <strong>${response.data[i].from}</strong> para <strong>${response.data[i].to}</strong>: ${response.data[i].text} </div>
         </li>`
         }
 
@@ -48,10 +62,9 @@ function renderizarMensagem(response) {
             exibirMensagens.innerHTML += `
             <li class="reservadamente">
                 <span>(${response.data[i].time})</span> <strong>${response.data[i].from}</strong> reservadamente para <strong>${response.data[i].to}</strong>: ${response.data[i].text}
-                quer tc?
             </li>`
         }
-        mensagemPrivada(response);
+       
     }
     atualizarMensagens();
 }
@@ -87,13 +100,68 @@ function informarConexao() {
 // }
 // perguntarNome();
 
-function perguntarNomeNovamente(erro) {
-    const text = document.querySelector('.texto');
-    if (erro.response.status === 400) {
-        text.innerHTML = `<p>Digite um novo usuário, esse já está em uso!</p>`
-    }
-    recarregarPagina();
+
+
+function listarParticipantes() {
+    const pegarLista = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+    pegarLista.then(renderizarParticipantes)
 }
+
+
+function escolherVisibilidade(mensagem, elemento) {
+    const selecionar = document.querySelector('.visibilidades .check');
+
+    if (selecionar !== null) {
+        selecionar.classList.remove('ocultar');
+
+    }
+
+    elemento.classList.toggle('ocultar');
+
+    tipoMensagem = mensagem;
+    console.log(tipoMensagem)
+}
+
+
+//jogar o nome para o input e (selecionar o nome concluiído)
+function selecionarParticipante(destinatarioPrivado, element) {
+    const selecionar = document.querySelector('.contatos .check');
+    if (selecionar !== null) {
+        selecionar.classList.remove('ocultar')
+    }
+    element.classList.toggle('ocultar');
+
+    destinatario = destinatarioPrivado;
+    console.log(destinatario)
+}
+
+function renderizarParticipantes(response) {
+    const usuarios = document.querySelector('.contatos');
+    usuarios.innerHTML = "";
+    for (let i = 0; i < response.data.length; i++) {
+        usuarios.innerHTML += ` <li class="visibilidade-publico" onclick="selecionarParticipante('${response.data[i].name}', this)">
+        <ion-icon name="person-circle"></ion-icon><span class="nome">${response.data[i].name}</span><ion-icon class="check" name="checkmark-outline">
+        </ion-icon>
+    </li>`
+
+    }
+}
+
+document.addEventListener("keyup", function (evento) {
+    if (evento.key === "Enter") {
+        enviarMensagens()
+    }
+});
+
+function enviarMensagemPrivada() {
+   const modificarTextoInput = document.querySelector('.mensagemPadrao');
+    if (destinatario === 'private_mensagem' && tipoMensagem === 'message') {
+       modificarTextoInput.innerHTML += `<span>${destinatario} e ${tipoMensagem}</span>`
+        return true;
+    }
+    return false;
+}
+enviarMensagemPrivada();
 
 function enviarMensagens() {
     let mensagem = document.querySelector('#input').value;
@@ -101,9 +169,9 @@ function enviarMensagens() {
     const enviarNovaMensagem = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages',
         {
             from: nome,
-            to: "Todos", //"nome do destinatário (Todos se não for um específico)",
+            to: destinatario,
             text: mensagem,
-            type: "message" // ou "private_message" para o bônus
+            type: tipoMensagem
         });
     enviarNovaMensagem.then(pegarDados)
     document.querySelector("#input").value = "";
@@ -120,47 +188,32 @@ function mostrarNavbar() {
     background.classList.toggle('hidden');
 }
 
-function listarParticipantes() {
-    const pegarLista = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
-    pegarLista.then(renderizarParticipantes)
-}
-
-function renderizarParticipantes(response) {
-    const usuarios = document.querySelector('.post');
-    usuarios.innerHTML = "";
-    for (let i = 0; i < response.data.length; i++) {
-        usuarios.innerHTML += ` <li>
-       <span> <ion-icon name="person-circle-outline"></ion-icon> 
-        ${response.data[i].name}</span>
-    </li>`
-
-    }
-}
-
-document.addEventListener("keyup", function (evento) {
-    if (evento.key === "Enter") {
-        enviarMensagens()
-    }
-});
 
 //não está dando certo
-function mensagemPrivada(response) {
-    if (response.data.type === 'private_message' && response.data.from === nome && response.data.to === nome) {
-        return true;
+// function mensagemPrivada(response) {
+//     if (response.data.type === 'private_message' && response.data.from === nome && response.data.to === nome) {
+//         return true;
 
-    }
-    return false;
-}
+//     }
+//     return false;
+// }
 
-function check() {
-    const selecionar = document.querySelector('.postDois  .checkmark');
+// function moidificarInputMensagem() {
+//     const selecionarContatos = document.querySelector('.contatos li');
+//     const selecionarVisibilidade = document.querySelector('.visibilidades li');
+//     const mensagemPadraoInput = document.querySelector('.mensagemPadrao');
+//     mensagemPadraoInput.innerHTML = ""
+//     if (selecionarContatos !== null && selecionarVisibilidade !== null) {
+//         mensagemPadraoInput.innerHTML += `<span class="mensagemPadrao">Enviando para Todos</span>`
 
-    if (selecionar !== null) {
-        selecionar.classList.add('ocultar');
-        //selecionar.innerHTML = `<ion-icon name="checkmark-sharp"></ion-icon>`
-    }
-    const tag = document.querySelector('.postDois .checkmark')
-    tag.classList.remove('ocultar');
+//     }
+//     const selecionado = document.querySelector('.contatos li')
+//     selecionado.innerHTML += `<span>Enviando para ${destinatario}
+//     ${tipoMensagem} $</span>`
 
-    // console.log(tag)
-}
+// }
+// moidificarInputMensagem()
+
+// let contato;
+// let visibilidade;
+
