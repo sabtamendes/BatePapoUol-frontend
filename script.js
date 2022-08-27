@@ -1,5 +1,3 @@
-const AXIOS_URL = "https://mock-api.driven.com.br/api/v6/uol/";
-
 let nome;
 function enviarNome() {
     nome = document.querySelector('.inputValue').value;
@@ -17,83 +15,17 @@ function enviarNome() {
 
 }
 
+//ARROW FUNCTION - FAZER
 function iniciarChat(response) {
-    //     const removerTela = document.querySelector('.entrada');
-    //     if (response !== undefined) {
-    //         removerTela.classList.remove('hidden');
-    //     }
-    //     removerTela.classList.add('hidden');
     console.log(response)
     pegarDados();
 }
-
-
-
-
-
-
-// enviarNome('Sabta');
-// let nome;
-// function enviarNome() {
-//     nome = prompt('Qual o seu lindo nome?')
-
-//     const promise = axios.post(`${AXIOS_URL}participants`, {
-//         name: nome
-//     });
-
-
-//     promise.then(pegarDados);
-//     // promise.catch(perguntarNomeNovamente);
-
-// }
-
-// enviarNome()
-
-
-
-
-
-// /* ----------------------------------------------------------------------------------------------*/
-
-
-
-// // pegarDados();
-
-
-
-
-
-
-
-
-
-
-
-// function enviarMensagens() {
-
-//     const input = document.querySelector('#input');
-
-//     const mensagem = {
-//         from: nome,
-//         to: "Todos",
-//         text: input.value,
-//         type: "message" // ou "private_message" para o bônus
-//     }
-//     const enviar = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagem);
-//     enviar.then(pegarDados);
-//     enviar.catch(recarregarMensagens)
-//     console.log(enviar)
-// }
-// enviarMensagens();
-
-
 
 function pegarDados() {
     const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     promise.then(renderizarMensagem);
     listarParticipantes();
 }
-
 
 function renderizarMensagem(response) {
     const exibirMensagens = document.querySelector('.mensagens');
@@ -119,7 +51,7 @@ function renderizarMensagem(response) {
                 quer tc?
             </li>`
         }
-
+        mensagemPrivada(response);
     }
     atualizarMensagens();
 }
@@ -130,7 +62,7 @@ function atualizarMensagens() {
 }
 
 function recarregarMensagens() {
-    //setInterval(pegarDados, 3000);
+    setInterval(pegarDados, 3000);
     setInterval(informarConexao, 5000, nome);
     setInterval(listarParticipantes, 10000);
 }
@@ -140,8 +72,6 @@ function informarConexao() {
     if (nome !== undefined) {
         axios.post('https://mock-api.driven.com.br/api/v6/uol/status', { name: nome });
     }
-
-
 }
 
 
@@ -161,8 +91,8 @@ function perguntarNomeNovamente(erro) {
     const text = document.querySelector('.texto');
     if (erro.response.status === 400) {
         text.innerHTML = `<p>Digite um novo usuário, esse já está em uso!</p>`
-        recarregarPagina();
     }
+   recarregarPagina();
 }
 
 function enviarMensagens() {
@@ -179,12 +109,9 @@ function enviarMensagens() {
     document.querySelector("#input").value = "";
 }
 
-
 function recarregarPagina() {
     window.location.reload();
 }
-
-
 
 function mostrarNavbar() {
     const nav = document.querySelector('.navbar');
@@ -192,8 +119,6 @@ function mostrarNavbar() {
     nav.classList.toggle('hidden');
     background.classList.toggle('hidden');
 }
-
-
 
 function listarParticipantes() {
     const pegarLista = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
@@ -208,6 +133,7 @@ function renderizarParticipantes(response) {
         <ion-icon name="person-circle-outline"></ion-icon>
         <span>${response.data[i].name}</span>
     </li>`
+
     }
 }
 
@@ -217,11 +143,11 @@ document.addEventListener("keyup", function (evento) {
     }
 });
 
-
+//não está dando certo
 function mensagemPrivada(response) {
-    if (response === 'private_message' && response.from === nome && response.to === nome) {
+    if (response.data.type === 'private_message' && response.data.from === nome && response.data.to === nome) {
         return true;
+        
     }
     return false;
 }
-mensagemPrivada()
