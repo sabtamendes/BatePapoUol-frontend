@@ -388,7 +388,7 @@ footer ion-icon {
         /* height: 15%; */
         background: #FFFFFF;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
-        padding: 3%;
+        padding: 4%;
 
         position: fixed;
         z-index: 2;
@@ -442,14 +442,14 @@ footer ion-icon {
 
     .menu li {
         font-size: 15px;
-        margin: 10px 0;
+        margin: 5px;
         display: flex;
         align-items: center;
         word-break: break-word;
     }
 
     h3 {
-        margin: 5%;
+        margin: 5% 1%;
         text-align: center;
     }
 
@@ -561,7 +561,7 @@ footer ion-icon {
 
     footer input::placeholder {
         width: 145px;
-        height: 30px;
+        height: 40px;
 
         font-family: 'Roboto', sans-serif;
         font-style: italic;
@@ -585,7 +585,7 @@ footer ion-icon {
     }
 
     .mensagemPadrao {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 100;
         position: fixed;
         bottom: 0;
