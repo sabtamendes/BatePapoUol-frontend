@@ -5,11 +5,8 @@ let tipoMensagem = "message";
 
 function enviarNome() {
     nome = document.querySelector('.inputValue').value;
-    const removerTela = document.querySelector('.entrada');
-    if (nome !== undefined) {
-        removerTela.classList.remove('hidden');
-    }
-    removerTela.classList.add('hidden');
+    
+   
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants',
         {
             name: nome
@@ -21,16 +18,19 @@ function enviarNome() {
 
 //ARROW FUNCTION - FAZER
 function iniciarChat(response) {
-    response.data
-    pegarDados();
+    const removerTela = document.querySelector('.entrada');
+    if (response.data.status === 200) {
+        removerTela.classList.remove('hidden');
+        pegarDados();
+    }
+    removerTela.classList.add('hidden');
 }
 
 function perguntarNomeNovamente(erro) {
     const text = document.querySelector('.texto');
+    // text.innerHTML = "";
     if (erro.response.status === 400) {
-        text.innerHTML += `<div class="texto"><p>Digite um novo usuário, esse já está em uso!</p></div>`
-        recarregarPagina();
-
+        text.innerHTML = `<div class="texto"><p>Digite um novo usuário, esse já está em uso! 😅</p></div>`
     }
 }
 
