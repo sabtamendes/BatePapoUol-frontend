@@ -28,7 +28,7 @@ function iniciarChat(response) {
 
 function perguntarNomeNovamente(erro) {
     const text = document.querySelector('.texto');
-    // text.innerHTML = "";
+
     if (erro.response.status === 400) {
         text.innerHTML = `<div class="texto"><p>Digite um novo usuário, esse já está em uso! 😅</p></div>`
     }
@@ -105,7 +105,7 @@ function listarParticipantes() {
 
 
 function escolherVisibilidade(mensagem, elemento) {
-    const selecionar = document.querySelector('.visibilidades .check');
+    const selecionar = document.querySelector('.post-visibilidades .check');
 
     if (selecionar !== null) {
         selecionar.classList.remove('ocultar');
@@ -181,7 +181,7 @@ function recarregarPagina() {
 }
 
 function mostrarNavbar() {
-    const nav = document.querySelector('.navbar');
+    const nav = document.querySelector('.background');
     const background = document.querySelector(".menu");
     nav.classList.toggle('hidden');
     background.classList.toggle('hidden');

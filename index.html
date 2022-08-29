@@ -12,22 +12,22 @@
 </head>
 
 <body>
-    <nav class="navbar hidden" onclick="mostrarNavbar()"></nav>
+    <nav class="background hidden" onclick="mostrarNavbar()"></nav>
 
     <aside class="menu hidden">
 
-        <h3 class="titulo-menu">Escolha um contato para enviar mensagem:</h3>
+        <h3>Escolha um contato para enviar mensagem:</h3>
 
         <ul class="contatos">
-            <li class="todos">
+            <li>
                 <ion-icon name="people"></ion-icon><span>Todos</span>
                 </ion-icon>
             </li>
         </ul>
 
-        <h3 class="titulo-menu">Escolha a visibilidade:</h3>
+        <h3 class="titulo">Escolha a visibilidade:</h3>
 
-        <ul class="visibilidades">
+        <ul class="post-visibilidades">
 
             <li onclick="escolherVisibilidade('message', this)">
 
@@ -82,7 +82,7 @@
     <footer>
         <input id="input" type="text" placeholder="Escreva aqui...">
         <span class="mensagemPadrao">Enviando para Todos</span>
-        
+
         <ion-icon onclick="enviarMensagens()" name="paper-plane-outline"></ion-icon>
     </footer>
 
